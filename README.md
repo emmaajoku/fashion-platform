@@ -45,6 +45,9 @@ $ mysql -u root -p
 
 $ CREATE DATABASE fashionplatform;
 
+# Ensure the password and user name is update in the .env file, the file look like below 
+## DATABASE_URL="mysql://database_user_name:database_password@localhost:3306/fashionplatform?schema=public"
+
 ```
 
 ```bash
