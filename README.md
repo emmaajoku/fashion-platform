@@ -38,6 +38,13 @@ $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/
 $ brew install mysql
 
 $ brew services start mysql
+
+$ mysql.server start
+
+$ mysql -u root -p
+
+$ CREATE DATABASE fashionplatform;
+
 ```
 
 ```bash
