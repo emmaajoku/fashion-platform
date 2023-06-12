@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = []
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  userId           Int      @id @default(autoincrement())
+  emailAddress     String?  @default("")
+  firstName        String?  @default("")
+  lastName         String?  @default("")
+  password         String?
+  phone            String?
+  verified         Boolean? @default(true)
+  resetToken       String?  @default("")
+  resetTokenExpiry BigInt?  @default(10000)
+  dob              String?  @default("")
+  isAdmin          Boolean? @default(false)
+  deviceId         String?  @default("")
+  deviceIp         String?  @default("")
+  deviceModel      String?  @default("")
+  platform         String?  @default("web")
+  lastLoggedIn     String?  @default("")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map(name: "user_accounts")
+}
+
+model Emailer {
+  id                Int      @id @default(autoincrement())
+  verifyToken       String?
+  emailAddress      String?
+  verifyTokenExpiry BigInt   @default(900000)
+  valid             Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map(name: "emailer")
+}
+
+model Order {
+  id       Int  @id @default(autoincrement())
+  quantity Int
+  itemId   Int
+  showId   Int
+  item     Item @relation(fields: [itemId], references: [id])
+  show     Show @relation(fields: [showId], references: [id])
+
+  @@index([itemId])
+  @@map(name: "order")
+  @@index([showId])
+}
+
+model Item {
+  id       Int     @id @default(autoincrement())
+  itemName String @unique
+  quantity Int
+  orders  Order[]
+  show     Show    @relation(fields: [id], references: [id])
+
+  @@index([id])
+  @@map(name: "item")
+}
+
+model Show {
+  id        Int     @id @default(autoincrement())
+  showItems Item[]
+  Order     Order[]
+
+  @@map(name: "show")
+}
+

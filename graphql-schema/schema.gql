@@ -1,0 +1,33 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ItemModel {
+  id: Int!
+  itemName: String!
+  quantity: Int!
+}
+
+type ShowModel {
+  id: Int!
+  showItems: [ItemModel!]!
+  orders: [OrderModel!]!
+}
+
+type OrderModel {
+  id: Int!
+  quantity: Int!
+  item: ItemModel!
+  show: ShowModel!
+}
+
+type Query {
+  soldItems(itemId: Int, showId: Int!): [ItemModel!]!
+  showOrders(showId: Int!): [OrderModel!]!
+  show(showId: Int!): ShowModel!
+}
+
+type Mutation {
+  buyItem(itemId: Int!, showId: Int!): Boolean!
+  inventory(quantity: Int!, itemName: String!): ItemModel!
+}
